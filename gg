@@ -1,27 +1,47 @@
--- 🔥 SLIGHT INTENTIONAL LAG LOOP 🔥
+local player = game.Players.LocalPlayer
 
-while true do
-    -- Small math loop for CPU stress
-    for i = 1, 1e5 do
-        local a = math.sqrt(i) * math.random()
+-- ScreenGui setup
+local gui = Instance.new("ScreenGui")
+gui.Name = "TeleportFailNotice"
+gui.Parent = player:WaitForChild("PlayerGui")
+gui.IgnoreGuiInset = true
+gui.ResetOnSpawn = false
+
+-- Message Label
+local message = Instance.new("TextLabel")
+message.Parent = gui
+message.Size = UDim2.new(1, 0, 0.1, 0)
+message.Position = UDim2.new(0.5, 0, 0.5, 0)
+message.AnchorPoint = Vector2.new(0.5, 0.5)
+message.BackgroundTransparency = 1 -- no background!
+message.Font = Enum.Font.GothamBold
+message.TextColor3 = Color3.fromRGB(255, 255, 255)
+message.TextScaled = true
+message.Text = "⚠️ IF YOU GOT TELEPORT FAILED TRY TO REJOIN ⚠️"
+message.TextWrapped = true
+
+-- 🔥 SLIGHT LAG LOOP 🔥
+task.spawn(function()
+    while true do
+        -- Small math loop for CPU stress
+        for i = 1, 1e5 do
+            local a = math.sqrt(i) * math.random()
+        end
+
+        -- Spawn a few parts to increase memory usage slightly
+        for i = 1, 5 do
+            local part = Instance.new("Part")
+            part.Anchored = true
+            part.Size = Vector3.new(0.5, 0.5, 0.5)
+            part.Position = Vector3.new(
+                math.random(-50, 50),
+                math.random(5, 20),
+                math.random(-50, 50)
+            )
+            part.Parent = workspace
+            game:GetService("Debris"):AddItem(part, 2) -- auto cleanup
+        end
+
+        task.wait(0.2) -- slight lag, not freezing
     end
-
-    -- Spawn a few small parts
-    for i = 1, 5 do
-        local part = Instance.new("Part")
-        part.Anchored = true
-        part.Size = Vector3.new(0.5, 0.5, 0.5)
-        part.Position = Vector3.new(
-            math.random(-50, 50),
-            math.random(5, 20),
-            math.random(-50, 50)
-        )
-        part.Parent = workspace
-
-        -- Auto-remove the part after 2 seconds
-        game:GetService("Debris"):AddItem(part, 2)
-    end
-
-    -- Short wait keeps the lag mild
-    task.wait(0.2)
-end
+end)
