@@ -1,8 +1,8 @@
 -- 🔥 SLIGHT INTENTIONAL LAG LOOP 🔥
 
 while true do
-    -- Lighter math loop
-    for i = 1, 1e5 do  -- Small loop for CPU stress
+    -- Small math loop for CPU stress
+    for i = 1, 1e5 do
         local a = math.sqrt(i) * math.random()
     end
 
@@ -18,8 +18,10 @@ while true do
         )
         part.Parent = workspace
 
-        -- Auto-remove part after 2 seconds to avoid buildup
+        -- Auto-remove the part after 2 seconds
         game:GetService("Debris"):AddItem(part, 2)
     end
 
-    -- Wait a bit longer for softer
+    -- Short wait keeps the lag mild
+    task.wait(0.2)
+end
